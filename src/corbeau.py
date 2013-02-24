@@ -11,7 +11,7 @@ class VerifiedHTTPSTransport(raven.transport.HTTPTransport):
 
     def send(self, data, headers):
         response = requests.post(self._url, headers=headers,
-            timeout=self.timeout, verify=self.certs)
+                                 timeout=self.timeout, verify=self.certs)
         response.raise_for_status()
         return response.content
 
@@ -43,17 +43,18 @@ default_transports = [
     ThreadedHTTPTransport,
 ]
 
+
 class TransportRegistry(raven.transport.registry.TransportRegistry):
 
     def override_scheme(self, scheme, cls):
         if scheme in self._scheme:
             del self._scheme[scheme]
         self.register_transport(scheme, cls)
-    
+
 
 class Client(raven.Client):
 
-    _registry = TransportRegistry(default_transports) 
+    _registry = TransportRegistry(default_transports)
 
     @property
     def registry(self):
