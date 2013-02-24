@@ -1,5 +1,8 @@
 import corbeau
+import doctest
 import mock
+import raven
+import raven.base
 import urlparse
 import unittest
 
@@ -21,3 +24,19 @@ class CorbeauTest(unittest.TestCase):
         self.assertTrue(kwargs["verify"])
         self.assertEqual(kwargs["timeout"], 1)
         self.assertTrue("X-Sentry-Auth" in kwargs["headers"])
+
+
+def setUp(test):
+    raven.base.Raven = None
+    test.globs.update(dict(
+        corbeau=corbeau,
+        raven=raven,
+        urlparse=urlparse))
+
+def test_suite():
+    suite = unittest.TestLoader().loadTestsFromTestCase(CorbeauTest)
+    suite.addTest(doctest.DocFileSuite(
+        "../README.rst",
+        optionflags=doctest.ELLIPSIS,
+        setUp=setUp))
+    return suite

@@ -55,6 +55,10 @@ class Client(raven.Client):
 
     _registry = TransportRegistry(default_transports) 
 
+    @property
+    def registry(self):
+        return self._registry
+
     @classmethod
     def override_scheme(cls, scheme, transport_class):
         self._registry.override_scheme(scheme, transport_class)

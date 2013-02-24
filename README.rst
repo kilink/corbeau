@@ -9,4 +9,8 @@ which adds a cert-verifying HTTPS transport.
 
 .. code-block:: pycon
 
-    >>> client = corbeau.Client("https://foo:bar@example.com")
+    >>> client = corbeau.Client("https://foo:bar@example.com/project")
+    >>> client is raven.base.Raven
+    True
+    >>> client.registry.get_transport(urlparse.urlparse(client.servers[0]))
+    <corbeau.VerifiedHTTPSTransport object at 0x...>
