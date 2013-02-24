@@ -6,3 +6,7 @@ Corbeau
 
 Corbeau is an extension to `Raven <https://github.com/getsentry/raven>`_
 which adds a cert-verifying HTTPS transport.
+
+.. code-block:: pycon
+
+    >>> client = corbeau.Client("https://foo:bar@example.com")
