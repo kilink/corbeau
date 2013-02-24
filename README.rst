@@ -1,5 +1,5 @@
-Raven
-======
+Corbeau
+=======
 
 .. image:: https://secure.travis-ci.org/kilink/corbeau.png?branch=master
    :target: http://travis-ci.org/kilink/corbeau
