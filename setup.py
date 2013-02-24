@@ -19,7 +19,7 @@ setup(
     license="MIT",
     package_data={"": ["*.py"]},
     include_package_data=True,
-    install_requires=["raven", "requests"],
+    install_requires=["setuptools", "raven", "requests"],
     extras_require=dict(test=["mock"]),
     package_dir={"": "src"},
     py_modules=["corbeau"],
