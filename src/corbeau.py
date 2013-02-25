@@ -5,13 +5,16 @@ import raven.transport.threaded
 import requests
 
 
+session = requests.Session()
+
 class VerifiedHTTPSTransport(raven.transport.HTTPTransport):
 
     certs = True
 
     def send(self, data, headers):
-        response = requests.post(self._url, headers=headers,
-                                 timeout=self.timeout, verify=self.certs)
+        response = session.post(self._url, headers=headers,
+                                timeout=self.timeout, verify=self.certs,
+                                data=data)
         response.raise_for_status()
         return response.content
 
