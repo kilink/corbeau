@@ -15,6 +15,9 @@ setup(
     version="0.1",
     author="Patrick Strawderman",
     author_email="patrick@kilink.net",
+    description="A Raven extension that verifies SSL certificates",
+    long_description=open('README.rst').read() + '\n\n' +
+                     open('HISTORY.rst').read(),
     url="https://github/kilink/corbeau",
     license="MIT",
     package_data={"": ["*.py"]},
