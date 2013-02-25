@@ -15,7 +15,7 @@ setup(
     version="0.1",
     author="Patrick Strawderman",
     author_email="patrick@kilink.net",
-    description="A Raven extension that verifies SSL certificates",
+    description="A Sentry client based on Raven that verifies SSL certs",
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
     url="https://github/kilink/corbeau",
