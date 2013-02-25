@@ -61,6 +61,7 @@ def setUp(test):
         raven=raven,
         urlparse=urlparse))
 
+
 def test_suite():
     suite = unittest.TestLoader().loadTestsFromTestCase(CorbeauTest)
     suite.addTest(doctest.DocFileSuite(

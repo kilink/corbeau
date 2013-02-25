@@ -7,6 +7,7 @@ import requests
 
 session = requests.Session()
 
+
 class VerifiedHTTPSTransport(raven.transport.HTTPTransport):
 
     certs = True
