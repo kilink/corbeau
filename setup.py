@@ -18,7 +18,7 @@ setup(
     description="A Sentry client based on Raven that verifies SSL certs",
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
-    url="https://github/kilink/corbeau",
+    url="https://github.com/kilink/corbeau",
     license="MIT",
     package_data={"": ["*.py"]},
     include_package_data=True,
