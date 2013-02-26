@@ -20,7 +20,7 @@ setup(
                      open('HISTORY.rst').read(),
     url="https://github.com/kilink/corbeau",
     license="MIT",
-    package_data={"": ["*.py"]},
+    package_data={"": ["*.py", "*.rst"]},
     include_package_data=True,
     install_requires=["setuptools", "raven", "requests"],
     extras_require=dict(test=["mock"]),
