@@ -3,7 +3,7 @@
 History
 -------
 
-0.1 (unreleased)
+0.1 (2013-02-26)
 ++++++++++++++++
 
 - initial release
