@@ -4,6 +4,7 @@ import mock
 import raven
 import raven.base
 import requests.adapters
+import requests.models
 import urlparse
 import unittest
 
@@ -33,9 +34,12 @@ class CorbeauTest(unittest.TestCase):
            when using the client subclass.
         """
         client = corbeau.Client(self.dsn)
-        registry = client._registry
+        registry = client.registry
         transport = registry.get_transport(urlparse.urlparse(self.dsn))
         self.assertTrue(isinstance(transport, corbeau.VerifiedHTTPSTransport))
+        threaded = "threaded+" + self.dsn
+        transport = registry.get_transport(urlparse.urlparse(threaded))
+        self.assertTrue(isinstance(transport, corbeau.ThreadedHTTPTransport))
 
     @mock.patch("corbeau.session", new_callable=requests.session)
     def test_cert_verification(self, session):
