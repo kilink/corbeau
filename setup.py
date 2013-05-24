@@ -12,7 +12,7 @@ from setuptools import setup
 
 setup(
     name="corbeau",
-    version="0.1",
+    version="0.2",
     author="Patrick Strawderman",
     author_email="patrick@kilink.net",
     description="A Sentry client based on Raven that verifies SSL certs",
