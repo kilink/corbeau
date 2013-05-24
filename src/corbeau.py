@@ -20,7 +20,8 @@ class VerifiedHTTPSTransport(raven.transport.HTTPTransport):
         return response.content
 
 
-class ThreadedHTTPTransport(VerifiedHTTPSTransport):
+class ThreadedHTTPTransport(raven.transport.AsyncTransport,
+                            VerifiedHTTPSTransport):
 
     scheme = ['threaded+http', 'threaded+https']
 
@@ -35,11 +36,17 @@ class ThreadedHTTPTransport(VerifiedHTTPSTransport):
             self._worker = raven.transport.threaded.AsyncWorker()
         return self._worker
 
-    def send_sync(self, data, headers):
-        super(ThreadedHTTPTransport, self).send(data, headers)
+    def send_sync(self, data, headers, success_cb, failure_cb):
+        try:
+            super(ThreadedHTTPTransport, self).send(data, headers)
+        except Exception as e:
+            failure_cb(e)
+        else:
+            success_cb()
 
-    def send(self, data, headers):
-        self.get_worker().queue(self.send_sync, data, headers)
+    def async_send(self, data, headers, success_cb, failure_cb):
+        self.get_worker().queue(self.send_sync, data, headers, success_cb,
+                                failure_cb)
 
 
 default_transports = [
