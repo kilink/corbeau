@@ -1,24 +1,15 @@
 import corbeau
 import doctest
-import httplib
-import io
 import mock
 import raven
 import raven.base
 import requests.adapters
 import requests.models
-import requests.packages.urllib3
 import urlparse
 import unittest
 
 
-class HTTPResponse(object):
-
-    def __init__(self):
-        self.msg = httplib.HTTPMessage(io.BytesIO())
-
-
-class DummyAdapter(requests.adapters.HTTPAdapter):
+class DummyAdapter(requests.adapters.BaseAdapter):
 
     request = None
     kwargs = None
@@ -26,9 +17,9 @@ class DummyAdapter(requests.adapters.HTTPAdapter):
     def send(self, request, **kwargs):
         self.request = request
         self.kwargs = kwargs
-        response = requests.packages.urllib3.HTTPResponse(
-            original_response=HTTPResponse())
-        return self.build_response(request, response)
+        response = requests.models.Response()
+        response.request = request
+        return response
 
     def close(self):
         pass
