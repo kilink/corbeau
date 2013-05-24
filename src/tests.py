@@ -3,6 +3,7 @@ import doctest
 import httplib
 import io
 import mock
+import os.path
 import raven
 import raven.base
 import requests.adapters
@@ -11,6 +12,7 @@ import requests.packages.urllib3
 import urlparse
 import unittest
 
+cert_path = os.path.join(__file__, "cacert.pem")
 
 class HTTPResponse(object):
 
@@ -32,6 +34,19 @@ class DummyAdapter(requests.adapters.HTTPAdapter):
 
     def close(self):
         pass
+
+class SSLDummyAdapter(DummyAdapter):
+
+    request = None
+    kwargs = None
+    ssl_error = None
+
+    def send(self, request, **kwargs):
+        try:
+            return super(DummyAdapter, self).send(request, **kwargs)
+        except requests.adapters.SSLError as exc:
+            self.ssl_error = exc
+        return super(SSLDummyAdapter, self).send(request, **kwargs)
 
 
 class CorbeauTest(unittest.TestCase):
@@ -65,6 +80,18 @@ class CorbeauTest(unittest.TestCase):
         self.assertEqual(kwargs["timeout"], 1)
         self.assertTrue("X-Sentry-Auth" in request.headers)
         self.assertTrue(request.body)
+
+    @mock.patch("corbeau.session", new_callable=requests.session)
+    def test_cert_verification_failure(self, session):
+        adapter = SSLDummyAdapter()
+        session.mount("https://", adapter)
+        client = corbeau.Client(servers=["https://httpbin.org/post"])
+        client.registry = corbeau.TransportRegistry()
+        class Transport(corbeau.VerifiedHTTPSTransport):
+            certs = cert_path
+        client.registry.override_scheme("https", Transport)
+        client.captureMessage("Oh noes!")
+        self.assertTrue(adapter.ssl_error is not None)
 
 
 def setUp(test):

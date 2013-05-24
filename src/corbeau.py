@@ -58,9 +58,9 @@ default_transports = [
 class TransportRegistry(raven.transport.registry.TransportRegistry):
 
     def override_scheme(self, scheme, cls):
-        if scheme in self._scheme:
-            del self._scheme[scheme]
-        self.register_transport(scheme, cls)
+        if scheme in self._schemes:
+            del self._schemes[scheme]
+        self.register_scheme(scheme, cls)
 
 
 class Client(raven.Client):
@@ -71,6 +71,10 @@ class Client(raven.Client):
     def registry(self):
         return self._registry
 
+    @registry.setter
+    def registry(self, inst):
+        self._registry = inst
+
     @classmethod
     def override_scheme(cls, scheme, transport_class):
-        self._registry.override_scheme(scheme, transport_class)
+        cls._registry.override_scheme(scheme, transport_class)
