@@ -6,7 +6,6 @@ install:
   - pip install coverage coveralls mock zope.testrunner
   - pip install -e .
 script:
-  - echo `which zope-testrunner`
-  - coverage run `which zope-testrunner` --test-path=src --auto-color --auto-progress
+  - coverage run --source=corbeau `which zope-testrunner` --test-path=src --auto-color --auto-progress
 after_success:
  - coveralls
