@@ -8,7 +8,6 @@ import raven.base
 import requests.adapters
 import requests.models
 import requests.packages.urllib3
-import urlparse
 import unittest
 
 try:
