@@ -1,6 +1,5 @@
 import corbeau
 import doctest
-import httplib
 import io
 import mock
 import os.path
@@ -11,6 +10,11 @@ import requests.models
 import requests.packages.urllib3
 import urlparse
 import unittest
+
+try:
+    import httplib
+except ImportError:
+    import http.client as httplib
 
 cert_path = os.path.join(__file__, "cacert.pem")
 
