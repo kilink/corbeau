@@ -7,8 +7,8 @@ Corbeau
 .. image:: https://coveralls.io/repos/kilink/corbeau/badge.png
    :target: https://coveralls.io/r/kilink/corbeau
 
-Corbeau is an extension to `Raven <https://github.com/getsentry/raven>`_
-which adds a cert-verifying HTTPS transport.
+Corbeau is an extension to `raven-python <https://github.com/getsentry/raven-python>`_,
+which adds an HTTPS transport that actually verifies SSL certificates.
 
 It is a drop-in replacement for raven.Client:
 
