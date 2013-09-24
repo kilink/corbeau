@@ -20,34 +20,9 @@ class VerifiedHTTPSTransport(raven.transport.HTTPTransport):
         return response.content
 
 
-class ThreadedHTTPTransport(raven.transport.AsyncTransport,
+class ThreadedHTTPTransport(raven.transport.threaded.ThreadedHTTPTransport,
                             VerifiedHTTPSTransport):
-
-    scheme = ['threaded+http', 'threaded+https']
-
-    def __init__(self, parsed_url):
-        super(ThreadedHTTPTransport, self).__init__(parsed_url)
-
-        # remove the threaded+ from the protocol, as it is not a real protocol
-        self._url = self._url.split('+', 1)[-1]
-
-    def get_worker(self):
-        if not hasattr(self, '_worker'):
-            self._worker = raven.transport.threaded.AsyncWorker()
-        return self._worker
-
-    def send_sync(self, data, headers, success_cb, failure_cb):
-        try:
-            super(ThreadedHTTPTransport, self).send(data, headers)
-        except Exception as e:
-            failure_cb(e)
-        else:
-            success_cb()
-
-    def async_send(self, data, headers, success_cb, failure_cb):
-        self.get_worker().queue(self.send_sync, data, headers, success_cb,
-                                failure_cb)
-
+    pass
 
 default_transports = [
     VerifiedHTTPSTransport,
