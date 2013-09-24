@@ -16,6 +16,11 @@ try:
 except ImportError:
     import http.client as httplib
 
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 cert_path = os.path.join(__file__, "cacert.pem")
 
 class HTTPResponse(object):
