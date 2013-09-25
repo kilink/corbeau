@@ -14,6 +14,9 @@ try:
     import httplib
 except ImportError:
     import http.client as httplib
+    PY3 = True
+else:
+    PY3 = False
 
 try:
     import urlparse
@@ -22,10 +25,14 @@ except ImportError:
 
 cert_path = os.path.join(__file__, "cacert.pem")
 
+
 class HTTPResponse(object):
 
     def __init__(self):
-        self.msg = httplib.HTTPMessage(io.BytesIO())
+        if PY3:
+            self.msg = httplib.HTTPMessage()
+        else:
+            self.msg = httplib.HTTPMessage(io.BytesIO())
 
 
 class DummyAdapter(requests.adapters.HTTPAdapter):
